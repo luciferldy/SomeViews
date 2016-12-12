@@ -92,7 +92,7 @@ public class ContactsFragment extends BaseFragment {
                     }
                     while (pCur.moveToNext()) {
                         // Do something with phones
-                        contact.number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                        contact.number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         break;
                     }
                     pCur.close();

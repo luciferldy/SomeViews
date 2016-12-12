@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     ArrayList<String> labelList = new ArrayList<>();
     FragmentManager manager;
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         RecyclerView rv = (RecyclerView) findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         init();
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
      * @param label 标签
      */
     private void newFragment(String label) {
-        FragmentTransaction transaction = manager.beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment;
         if (ContactsFragment.TAG.contains(label)) {
             fragment = new ContactsFragment();
@@ -139,15 +143,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        transaction.add(fragment, label);
+        transaction.add(android.R.id.content, fragment, label);
+        transaction.addToBackStack(label);
         transaction.commit();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (manager.getBackStackEntryCount() > 0 ) {
             manager.popBackStack();
+            return;
         }
+        super.onBackPressed();
     }
 }

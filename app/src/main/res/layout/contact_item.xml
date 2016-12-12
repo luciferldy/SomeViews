@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="20dip"
-    android:paddingTop="5dip"
-    android:paddingBottom="5dip">
+    android:paddingTop="7dip"
+    android:paddingBottom="7dip">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dip"
-        android:hint="Lian"/>
+        android:textSize="18dip"
+        android:textColor="@color/md_black"
+        android:hint="连冬阳"/>
 
     <TextView
         android:id="@+id/number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dip"
-        android:textSize="14dip"
+        android:textSize="13dip"
+        android:textColor="@color/md_black"
         android:hint="18249461692"/>
 </LinearLayout>

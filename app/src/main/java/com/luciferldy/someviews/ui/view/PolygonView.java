@@ -18,7 +18,7 @@ import com.luciferldy.someviews.R;
  */
 
 public class PolygonView extends View{
-    private static final String LOG_TAG = "SetPolyToPoly";
+    private static final String LOG_TAG = PolygonView.class.getSimpleName();
 
     private int testPoint = 0;
     private int triggerRadius = 180;    // 触发半径为180px

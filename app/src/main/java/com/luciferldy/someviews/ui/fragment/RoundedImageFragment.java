@@ -55,7 +55,7 @@ public class RoundedImageFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//        super.onViewCreated(view, savedInstanceState);
         new XfermodeAsyncTask().execute();
         new ClipAsyncTask().execute();
         new RoundedBmpAsyncTask().execute();
