@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.luciferldy.someviews.ui.view.LetterIndexView
+        android:id="@+id/liv_contacts"
+        android:layout_width="30dip"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/tv_show"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/black"
+        android:background="@color/black_trans"
+        android:gravity="center"
+        android:textSize="40dip"
+        android:visibility="gone"
+        android:hint="A"/>
+
+</RelativeLayout>
