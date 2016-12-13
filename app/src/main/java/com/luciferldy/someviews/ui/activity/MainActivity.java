@@ -18,13 +18,11 @@ import android.widget.Toast;
 import com.luciferldy.someviews.R;
 import com.luciferldy.someviews.ui.fragment.ContactsFragment;
 import com.luciferldy.someviews.ui.fragment.ItemTouchFragment;
-import com.luciferldy.someviews.ui.fragment.PolygonFragment;
 import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
 import com.luciferldy.someviews.ui.view.DragLayout;
 import com.luciferldy.someviews.ui.view.FoldingLayout;
 import com.luciferldy.someviews.ui.view.LetterIndexView;
-import com.luciferldy.someviews.ui.view.PolygonView;
 import com.luciferldy.someviews.ui.view.RoundedImageView;
 import com.luciferldy.someviews.ui.view.SearchView;
 import com.luciferldy.someviews.ui.view.SlideTrackView;
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         labelList.add(DragLayout.class.getSimpleName());
         labelList.add(FoldingLayout.class.getSimpleName());
         labelList.add(LetterIndexView.class.getSimpleName());
-        labelList.add(PolygonView.class.getSimpleName());
         labelList.add(RoundedImageView.class.getSimpleName());
         labelList.add(SearchView.class.getSimpleName());
         labelList.add(SlideTrackView.class.getSimpleName());
@@ -136,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
             fragment = new ItemTouchFragment();
         } else if (ContactsFragment.TAG.contains(label)) {
             fragment = new ContactsFragment();
-        } else if (PolygonFragment.TAG.contains(label)) {
-            fragment = new PolygonFragment();
         } else if (RoundedImageFragment.TAG.contains(label)) {
             fragment = new RoundedImageFragment();
         } else if (SlideTrackFragment.TAG.contains(label)) {
