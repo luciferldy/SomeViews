@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.luciferldy.someviews.R;
 import com.luciferldy.someviews.ui.fragment.ContactsFragment;
+import com.luciferldy.someviews.ui.fragment.ItemTouchFragment;
 import com.luciferldy.someviews.ui.fragment.PolygonFragment;
 import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
      * 初始化一些数据
      */
     private void init() {
+        labelList.add(ItemTouchFragment.class.getSimpleName());
         labelList.add(DragLayout.class.getSimpleName());
         labelList.add(FoldingLayout.class.getSimpleName());
         labelList.add(LetterIndexView.class.getSimpleName());
@@ -130,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
     private void newFragment(String label) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment;
-        if (ContactsFragment.TAG.contains(label)) {
+        if (ItemTouchFragment.TAG.contains(label)) {
+            fragment = new ItemTouchFragment();
+        } else if (ContactsFragment.TAG.contains(label)) {
             fragment = new ContactsFragment();
         } else if (PolygonFragment.TAG.contains(label)) {
             fragment = new PolygonFragment();
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        transaction.add(android.R.id.content, fragment, label);
+        transaction.add(R.id.content, fragment, label);
         transaction.addToBackStack(label);
         transaction.commit();
     }
