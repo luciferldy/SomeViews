@@ -16,9 +16,9 @@ import com.luciferldy.someviews.R;
  * Created by lian_ on 2016/10/17.
  */
 
-public class SpiderWebView extends View {
+public class RadarView extends View {
 
-    private static final String LOG_TAG = SpiderWebView.class.getSimpleName();
+    private static final String LOG_TAG = RadarView.class.getSimpleName();
 
     private int count = 6;
     private float angle = (float) (Math.PI * 2 / count);
@@ -32,24 +32,24 @@ public class SpiderWebView extends View {
     private Paint valuePaint; // 数据区画笔
     private Paint textPaint; // 文本画笔
 
-    public SpiderWebView(Context context) {
+    public RadarView(Context context) {
         super(context);
         Log.i(LOG_TAG, "constructor with one argument.");
     }
 
-    public SpiderWebView(Context context, AttributeSet attrs) {
+    public RadarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.i(LOG_TAG, "constructor with two arguments.");
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SpiderWebView, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RadarView, 0, 0);
         try {
-            maxValue = a.getInt(R.styleable.SpiderWebView_maxValue, 100);
-            int mainColor = a.getColor(R.styleable.SpiderWebView_mainPaintColor, getResources().getColor(android.R.color.darker_gray));
+            maxValue = a.getInt(R.styleable.RadarView_maxValue, 100);
+            int mainColor = a.getColor(R.styleable.RadarView_mainPaintColor, getResources().getColor(android.R.color.darker_gray));
             mainPaint = new Paint();
             mainPaint.setColor(mainColor);
-            int valueColor = a.getColor(R.styleable.SpiderWebView_valuePaintColor, getResources().getColor(android.R.color.holo_blue_dark));
+            int valueColor = a.getColor(R.styleable.RadarView_valuePaintColor, getResources().getColor(android.R.color.holo_blue_dark));
             valuePaint = new Paint();
             valuePaint.setColor(valueColor);
-            int textColor = a.getColor(R.styleable.SpiderWebView_textPaintColor, getResources().getColor(android.R.color.black));
+            int textColor = a.getColor(R.styleable.RadarView_textPaintColor, getResources().getColor(android.R.color.black));
             textPaint = new Paint();
             textPaint.setColor(textColor);
         } finally {
