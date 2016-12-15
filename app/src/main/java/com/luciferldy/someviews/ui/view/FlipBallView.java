@@ -3,6 +3,7 @@ package com.luciferldy.someviews.ui.view;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
@@ -11,14 +12,16 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.luciferldy.someviews.R;
+
 /**
  * Created by Lucifer on 2016/10/28.
  * 尝试制作一个进度条，两个小球围绕中心旋转
  */
 
-public class YRotateBallView extends View {
+public class FlipBallView extends View {
 
-    private static final String LOG_TAG = YRotateBallView.class.getSimpleName();
+    private static final String LOG_TAG = FlipBallView.class.getSimpleName();
     private static final int IDLE = 1; // 小球空闲
     private static final int ROTATE = 2; // 小球旋转
 
@@ -65,15 +68,21 @@ public class YRotateBallView extends View {
         }
     };
 
-    public YRotateBallView(Context context) {
+    public FlipBallView(Context context) {
         super(context, null);
     }
 
-    public YRotateBallView(Context context, AttributeSet attrs) {
+    public FlipBallView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        maxRadius = 24;
-        minRadius = 15;
-        distance = 60;
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FlipBallView, 0, 0);
+        try {
+            maxRadius = a.getDimensionPixelOffset(R.styleable.FlipBallView_maxRadius, 24);
+            minRadius = a.getDimensionPixelOffset(R.styleable.FlipBallView_minRadius, 15);
+            distance = a.getDimensionPixelOffset(R.styleable.FlipBallView_distance, 60);
+        } finally {
+            a.recycle();
+        }
 
         bluePos = -distance;
         orangePos = distance;
@@ -111,8 +120,7 @@ public class YRotateBallView extends View {
 
     private void drawBall(Canvas canvas) {
         canvas.drawCircle(width / 2 + bluePos, height / 2, blueRadius, mBluePaint);
-
-//        canvas.drawCircle(width / 2 + orangePos, height / 2, orangeRadius, mOrangePaint);
+        canvas.drawCircle(width / 2 + orangePos, height / 2, orangeRadius, mOrangePaint);
     }
 
     private void initPaint() {
@@ -138,8 +146,9 @@ public class YRotateBallView extends View {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float f = (float) valueAnimator.getAnimatedValue();
                 blueRadius = (float) ((maxRadius - minRadius) / 2 * Math.sin(f) + (maxRadius + minRadius) / 2);
-                bluePos = (float) (distance * Math.sin(f + Math.PI / 2));
-//                Log.d(TAG, "radius = " + blueRadius + ", position = " + bluePos);
+                bluePos = (float) (-distance * Math.sin(f + Math.PI / 2));
+                orangeRadius = (float) ((maxRadius - minRadius) / 2 * Math.sin(f) + (maxRadius + minRadius) / 2);
+                orangePos = (float) (distance * Math.sin(f + Math.PI / 2));
                 invalidate();
             }
         });

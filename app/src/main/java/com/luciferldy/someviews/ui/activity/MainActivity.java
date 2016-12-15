@@ -17,8 +17,11 @@ import android.widget.Toast;
 
 import com.luciferldy.someviews.R;
 import com.luciferldy.someviews.ui.fragment.ContactsFragment;
+import com.luciferldy.someviews.ui.fragment.FlipBallFragment;
 import com.luciferldy.someviews.ui.fragment.ItemTouchFragment;
+import com.luciferldy.someviews.ui.fragment.RadarViewFragment;
 import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
+import com.luciferldy.someviews.ui.fragment.SearchFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
 import com.luciferldy.someviews.ui.view.DragLayout;
 import com.luciferldy.someviews.ui.view.FoldingLayout;
@@ -26,9 +29,9 @@ import com.luciferldy.someviews.ui.view.LetterIndexView;
 import com.luciferldy.someviews.ui.view.RoundedImageView;
 import com.luciferldy.someviews.ui.view.SearchView;
 import com.luciferldy.someviews.ui.view.SlideTrackView;
-import com.luciferldy.someviews.ui.view.SpiderWebView;
+import com.luciferldy.someviews.ui.view.RadarView;
 import com.luciferldy.someviews.ui.view.TouchFoldingLayout;
-import com.luciferldy.someviews.ui.view.YRotateBallView;
+import com.luciferldy.someviews.ui.view.FlipBallView;
 
 import java.util.ArrayList;
 
@@ -65,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
         labelList.add(RoundedImageView.class.getSimpleName());
         labelList.add(SearchView.class.getSimpleName());
         labelList.add(SlideTrackView.class.getSimpleName());
-        labelList.add(SpiderWebView.class.getSimpleName());
+        labelList.add(RadarView.class.getSimpleName());
         labelList.add(TouchFoldingLayout.class.getSimpleName());
-        labelList.add(YRotateBallView.class.getSimpleName());
+        labelList.add(FlipBallView.class.getSimpleName());
 
         manager = getSupportFragmentManager();
     }
@@ -135,8 +138,14 @@ public class MainActivity extends AppCompatActivity {
             fragment = new ContactsFragment();
         } else if (RoundedImageFragment.TAG.contains(label)) {
             fragment = new RoundedImageFragment();
+        } else  if (SearchFragment.TAG.contains(label)) {
+            fragment = new SearchFragment();
         } else if (SlideTrackFragment.TAG.contains(label)) {
             fragment = new SlideTrackFragment();
+        } else if (RadarViewFragment.TAG.contains(label)) {
+            fragment = new RadarViewFragment();
+        } else  if (FlipBallFragment.TAG.contains(label)) {
+            fragment = new FlipBallFragment();
         } else {
             Toast.makeText(getBaseContext(), "No property fragment.", Toast.LENGTH_SHORT).show();
             return;

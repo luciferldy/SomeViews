@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white">
+
+    <com.luciferldy.someviews.ui.view.FlipBallView
+        android:id="@+id/flip_ball"
+        android:layout_width="200dip"
+        android:layout_height="200dip"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_control"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_marginBottom="100dip"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/search_view_control"
+        android:textColor="@color/md_white"
+        android:text="开始"
+        android:visibility="gone"/>
+
+</FrameLayout>

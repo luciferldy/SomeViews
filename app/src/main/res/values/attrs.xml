@@ -10,11 +10,17 @@
         <attr name="stroke_color" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="SpiderWebView">
+    <declare-styleable name="RadarView">
         <attr name="maxValue" format="float" />
         <attr name="mainPaintColor" format="color" />
         <attr name="textPaintColor" format="color" />
         <attr name="valuePaintColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="FlipBallView">
+        <attr name="maxRadius" format="dimension" />
+        <attr name="minRadius" format="dimension" />
+        <attr name="distance" format="dimension" />
     </declare-styleable>
 
 </resources>
