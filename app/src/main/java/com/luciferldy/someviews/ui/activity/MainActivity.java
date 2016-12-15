@@ -13,25 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.luciferldy.someviews.R;
 import com.luciferldy.someviews.ui.fragment.ContactsFragment;
+import com.luciferldy.someviews.ui.fragment.DragLayoutFragment;
 import com.luciferldy.someviews.ui.fragment.FlipBallFragment;
+import com.luciferldy.someviews.ui.fragment.FoldingLayoutFragment;
 import com.luciferldy.someviews.ui.fragment.ItemTouchFragment;
 import com.luciferldy.someviews.ui.fragment.RadarViewFragment;
 import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
 import com.luciferldy.someviews.ui.fragment.SearchFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
-import com.luciferldy.someviews.ui.view.DragLayout;
-import com.luciferldy.someviews.ui.view.FoldingLayout;
-import com.luciferldy.someviews.ui.view.LetterIndexView;
-import com.luciferldy.someviews.ui.view.RoundedImageView;
-import com.luciferldy.someviews.ui.view.SearchView;
-import com.luciferldy.someviews.ui.view.SlideTrackView;
-import com.luciferldy.someviews.ui.view.RadarView;
-import com.luciferldy.someviews.ui.view.TouchFoldingLayout;
-import com.luciferldy.someviews.ui.view.FlipBallView;
 
 import java.util.ArrayList;
 
@@ -42,8 +34,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    ArrayList<String> labelList = new ArrayList<>();
-    FragmentManager manager;
+    private FragmentManager mManager;
+    private RvAdapter mRvAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,57 +45,65 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         RecyclerView rv = (RecyclerView) findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-        init();
-        rv.setAdapter(new RvAdapter(labelList));
-    }
+        mRvAdapter = new RvAdapter();
+        rv.setAdapter(mRvAdapter);
 
-    /**
-     * 初始化一些数据
-     */
-    private void init() {
-        labelList.add(ItemTouchFragment.class.getSimpleName());
-        labelList.add(DragLayout.class.getSimpleName());
-        labelList.add(FoldingLayout.class.getSimpleName());
-        labelList.add(LetterIndexView.class.getSimpleName());
-        labelList.add(RoundedImageView.class.getSimpleName());
-        labelList.add(SearchView.class.getSimpleName());
-        labelList.add(SlideTrackView.class.getSimpleName());
-        labelList.add(RadarView.class.getSimpleName());
-        labelList.add(TouchFoldingLayout.class.getSimpleName());
-        labelList.add(FlipBallView.class.getSimpleName());
+        mRvAdapter.add(new SampleInfo("ItemTouchHelper", ItemTouchFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("DragLayout", DragLayoutFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("FoldingLayout", FoldingLayoutFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("Contacts", ContactsFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("RoundedImageView", RoundedImageFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("SearchView", SearchFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("SlideTrackView", SlideTrackFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("RadarView", RadarViewFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("FlipBallView", FlipBallFragment.class.getSimpleName()));
 
-        manager = getSupportFragmentManager();
+        mManager = getSupportFragmentManager();
     }
 
     class RvAdapter extends RecyclerView.Adapter<RvHolder> {
 
-        private ArrayList<String> labels = new ArrayList<>();
+        private ArrayList<SampleInfo> lists = new ArrayList<>();
 
-        public RvAdapter(ArrayList<String> labels) {
-            this.labels.addAll(labels);
+        public RvAdapter() {
         }
 
         @Override
         public RvHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getBaseContext()).inflate(R.layout.rv_item, parent, false);
+            View root = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_mainrv, parent, false);
             RvHolder holder = new RvHolder(root);
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(RvHolder holder, int position) {
-            holder.setLabel(labels.get(position));
+        public void onBindViewHolder(final RvHolder holder, final int position) {
+            holder.setLabel(lists.get(position).title);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    newFragment(lists.get(holder.getAdapterPosition()).fragmentName);
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
-            return labels.size();
+            return lists.size();
+        }
+
+        public boolean add(SampleInfo object) {
+            int lastIndex = lists.size();
+            if (lists.add(object)) {
+                notifyItemInserted(lastIndex);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     class RvHolder extends RecyclerView.ViewHolder {
 
-        String label;
         View root;
         TextView tvLabel;
 
@@ -111,57 +111,42 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             this.root = itemView;
             tvLabel = (TextView) this.root.findViewById(R.id.label);
-            this.root.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    newFragment(label);
-                }
-            });
         }
 
         public void setLabel(String label) {
-            this.label = label;
             tvLabel.setText(label);
         }
     }
 
     /**
      * 新建一个 Fragment
-     * @param label 标签
+     * @param fragmentName 标签
      */
-    private void newFragment(String label) {
+    private void newFragment(String fragmentName) {
+        Fragment fragment = Fragment.instantiate(getBaseContext(), fragmentName);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment;
-        if (ItemTouchFragment.TAG.contains(label)) {
-            fragment = new ItemTouchFragment();
-        } else if (ContactsFragment.TAG.contains(label)) {
-            fragment = new ContactsFragment();
-        } else if (RoundedImageFragment.TAG.contains(label)) {
-            fragment = new RoundedImageFragment();
-        } else  if (SearchFragment.TAG.contains(label)) {
-            fragment = new SearchFragment();
-        } else if (SlideTrackFragment.TAG.contains(label)) {
-            fragment = new SlideTrackFragment();
-        } else if (RadarViewFragment.TAG.contains(label)) {
-            fragment = new RadarViewFragment();
-        } else  if (FlipBallFragment.TAG.contains(label)) {
-            fragment = new FlipBallFragment();
-        } else {
-            Toast.makeText(getBaseContext(), "No property fragment.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        transaction.add(R.id.content, fragment, label);
-        transaction.addToBackStack(label);
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.add(R.id.content, fragment, fragmentName);
+        transaction.addToBackStack(fragmentName);
         transaction.commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (manager.getBackStackEntryCount() > 0 ) {
-            manager.popBackStack();
+        if (mManager.getBackStackEntryCount() > 0 ) {
+            mManager.popBackStack();
             return;
         }
         super.onBackPressed();
+    }
+
+    class SampleInfo {
+        public String title;
+        public String fragmentName;
+
+        public SampleInfo(String title, String fragmentName) {
+            this.title = title;
+            this.fragmentName = fragmentName;
+        }
     }
 }

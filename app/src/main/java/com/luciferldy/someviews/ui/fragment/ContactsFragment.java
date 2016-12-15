@@ -32,8 +32,7 @@ import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class ContactsFragment extends BaseFragment {
 
-    private static final String LOG_TAG = ContactsFragment.class.getSimpleName();
-    public static final String TAG = LetterIndexView.class.getSimpleName();
+    public static final String LOG_TAG = ContactsContract.class.getSimpleName();
 
     @Nullable
     @Override
@@ -159,7 +158,7 @@ public class ContactsFragment extends BaseFragment {
         @Override
         public ContactsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Log.d(LOG_TAG, "onCreateViewHolder");
-            View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item, parent, false);
+            View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
             ContactsViewHolder holder = new ContactsViewHolder(root);
             return holder;
         }

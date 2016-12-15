@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.luciferldy.someviews.R;
-import com.luciferldy.someviews.ui.view.RoundedImageView;
 
 /**
  * Created by Lucifer on 2016/12/8.
@@ -30,8 +29,7 @@ import com.luciferldy.someviews.ui.view.RoundedImageView;
 
 public class RoundedImageFragment extends BaseFragment {
 
-    private static final String LOG_TAG = RoundedImageFragment.class.getSimpleName();
-    public static final String TAG = RoundedImageView.class.getSimpleName();
+    public static final String TAG = RoundedImageFragment.class.getSimpleName();
 
     private ImageView mIvClip;
     private ImageView mIvXfermode;
@@ -43,7 +41,7 @@ public class RoundedImageFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.activity_rounded_image, container, false);
+        View root = inflater.inflate(R.layout.fragment_rounded_image, container, false);
         mIvClip = (ImageView) root.findViewById(R.id.iv_clip);
         mIvXfermode = (ImageView) root.findViewById(R.id.iv_xfermode);
         mIvRoundedBmp = (ImageView) root.findViewById(R.id.iv_rounded_bitmap);

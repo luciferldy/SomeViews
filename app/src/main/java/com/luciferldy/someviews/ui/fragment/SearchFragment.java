@@ -16,8 +16,7 @@ import com.luciferldy.someviews.ui.view.SearchView;
 
 public class SearchFragment extends BaseFragment {
 
-    public static final String TAG = SearchView.class.getSimpleName();
-    private static final String LOG_TAG = SearchFragment.class.getSimpleName();
+    public static final String TAG = SearchFragment.class.getSimpleName();
     private static final String START = "开始";
     private static final String STOP = "停止";
 

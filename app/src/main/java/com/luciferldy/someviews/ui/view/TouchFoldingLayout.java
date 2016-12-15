@@ -9,8 +9,7 @@ import android.view.MotionEvent;
 
 /**
  * Created by Lucifer on 2016/11/13.
- * e-mail: lian_dy@foxmail.com
- * tel: 18249461692
+ * E-mail: lian_dy@foxmail.com
  */
 
 public class TouchFoldingLayout extends FoldingLayout {

@@ -15,7 +15,7 @@ import com.luciferldy.someviews.ui.view.RadarView;
 
 public class RadarViewFragment extends BaseFragment {
 
-    public static final String TAG = RadarView.class.getSimpleName();
+    public static final String TAG = RadarViewFragment.class.getSimpleName();
 
     @Nullable
     @Override

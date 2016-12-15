@@ -21,7 +21,7 @@ import com.luciferldy.someviews.ui.view.FlipBallView;
 
 public class FlipBallFragment extends BaseFragment {
 
-    public static final String TAG = FlipBallView.class.getSimpleName();
+    public static final String TAG = FlipBallFragment.class.getSimpleName();
     private static final String START = "开始";
     private static final String STOP = "停止";
 

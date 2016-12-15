@@ -55,7 +55,7 @@ public class ItemTouchFragment extends BaseFragment {
 
         @Override
         public RvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getContext()).inflate(R.layout.itemtouch_item, parent, false);
+            View root = LayoutInflater.from(getContext()).inflate(R.layout.item_touchhelper, parent, false);
             RvViewHolder holder = new RvViewHolder(root);
             // 下面的代码执行后没有结果
 //            TextView tv = new TextView(getContext());
