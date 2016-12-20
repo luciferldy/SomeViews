@@ -5,4 +5,8 @@
 
     <dimen name="image_width">200dip</dimen>
     <dimen name="image_radius">5dip</dimen>
+
+    <dimen name="refresh_height">200dip</dimen>
+    <dimen name="refresh_top_margin">-200dip</dimen>
+    <dimen name="load_more_height">80dip</dimen>
 </resources>

@@ -22,6 +22,7 @@ import com.luciferldy.someviews.ui.fragment.FoldingLayoutFragment;
 import com.luciferldy.someviews.ui.fragment.ItemTouchFragment;
 import com.luciferldy.someviews.ui.fragment.RadarViewFragment;
 import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
+import com.luciferldy.someviews.ui.fragment.RvRefreshFragment;
 import com.luciferldy.someviews.ui.fragment.SearchFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
 
@@ -48,17 +49,20 @@ public class MainActivity extends AppCompatActivity {
         mRvAdapter = new RvAdapter();
         rv.setAdapter(mRvAdapter);
 
-        mRvAdapter.add(new SampleInfo("ItemTouchHelper", ItemTouchFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("DragLayout", DragLayoutFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("FoldingLayout", FoldingLayoutFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("Contacts", ContactsFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("RoundedImageView", RoundedImageFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("SearchView", SearchFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("SlideTrackView", SlideTrackFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("RadarView", RadarViewFragment.class.getSimpleName()));
-        mRvAdapter.add(new SampleInfo("FlipBallView", FlipBallFragment.class.getSimpleName()));
+        mRvAdapter.add(new SampleInfo("ItemTouchHelper", ItemTouchFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("DragLayout", DragLayoutFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("FoldingLayout", FoldingLayoutFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("Contacts", ContactsFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("RoundedImageView", RoundedImageFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("SearchView", SearchFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("SlideTrackView", SlideTrackFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("RadarView", RadarViewFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("FlipBallView", FlipBallFragment.class.getName()));
+        mRvAdapter.add(new SampleInfo("RefreshRecyclerView", RvRefreshFragment.class.getName()));
 
         mManager = getSupportFragmentManager();
+
+        newFragment(RvRefreshFragment.class.getName());
     }
 
     class RvAdapter extends RecyclerView.Adapter<RvHolder> {
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     private void newFragment(String fragmentName) {
         Fragment fragment = Fragment.instantiate(getBaseContext(), fragmentName);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         transaction.add(R.id.content, fragment, fragmentName);
         transaction.addToBackStack(fragmentName);
         transaction.commit();

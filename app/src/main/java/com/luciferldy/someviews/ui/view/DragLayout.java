@@ -17,11 +17,11 @@ import android.view.ViewGroup;
 public class DragLayout extends ViewGroup {
 
     private ViewDragHelper mDragHelper;
-    private GestureDetectorCompat mGeusterDetector;
+    private GestureDetectorCompat mGestureDetector;
 
     private View page_one, page_two;
     private int viewHeight;
-    private static final int VERTICAL_THRESHOLD = 100;  // 滑动速度的阈值
+    private static final int SPEED_THRESHOLD = 100;  // 滑动速度的阈值
     private static final int DISTANCE_THRESHOLD = 100;  //
     private int distanceTop;
     private ShowNextPageListener mNextPageListener;
@@ -32,6 +32,7 @@ public class DragLayout extends ViewGroup {
 
     public DragLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     @Override
@@ -60,7 +61,38 @@ public class DragLayout extends ViewGroup {
         page_two = getChildAt(1);
     }
 
+    @Override
+    public void computeScroll() {
+        if (mDragHelper.continueSettling(true)) {
 
+        }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (page_one.getBottom() > 0 && page_one.getTop() < 0) {
+            // 当 page one 在执行动画中的时候，不处理 touch 事件
+            return false;
+        }
+        boolean yScroll = mGestureDetector.onTouchEvent(ev);
+        boolean shouldIntercept = mDragHelper.shouldInterceptTouchEvent(ev);
+        int action = ev.getActionMasked();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            //
+            mDragHelper.processTouchEvent(ev);
+            distanceTop = page_one.getTop();
+        }
+
+        return shouldIntercept && yScroll;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // 统一交给 mDragHelper 处理，由 ViewDragHelper 实现拖动效果
+        mDragHelper.processTouchEvent(event);
+        return true;
+    }
 
     private void init() {
         mDragHelper = ViewDragHelper.create(this, 10f, new ViewDragHelper.Callback() {
@@ -73,6 +105,7 @@ public class DragLayout extends ViewGroup {
                 }
 
                 // 一个 view 的位置改变，另一个 view 的位置也要跟进
+                onViewPosChanged(childIndex, top);
             }
 
             @Override
@@ -89,6 +122,8 @@ public class DragLayout extends ViewGroup {
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
                 super.onViewReleased(releasedChild, xvel, yvel);
+                // 滑动松开后，需要向上或者向下粘到特定的位置
+                animTopOrBottom(releasedChild, yvel);
             }
 
             /**
@@ -100,8 +135,10 @@ public class DragLayout extends ViewGroup {
                 int offsetTopBottom;
                 if (viewIndex == 1) {
                     offsetTopBottom = viewHeight + page_one.getTop() - page_two.getTop();
+                    page_two.offsetTopAndBottom(offsetTopBottom);
                 } else if (viewIndex == 2) {
                     offsetTopBottom = page_two.getTop() - viewHeight - page_one.getTop();
+                    page_one.offsetTopAndBottom(offsetTopBottom);
                 }
 
                 invalidate();
@@ -111,21 +148,21 @@ public class DragLayout extends ViewGroup {
                 int finalTop = 0;
                 if (releaseChild == page_one) {
                     // 拖动第一个 view 松手
-                    if (yvel < -VERTICAL_THRESHOLD || (distanceTop == 0 && page_one.getTop() < - DISTANCE_THRESHOLD)) {
+                    if (yvel < -SPEED_THRESHOLD || (distanceTop == 0 && page_one.getTop() < - DISTANCE_THRESHOLD)) {
                         finalTop = -viewHeight;
 
                         // 下一页可以进行初始化
                         if (null != mNextPageListener) {
                             mNextPageListener.onDragNext();
                         }
-                    } else {
+                    }
+                } else {
                         //  拖动第二个 view 松手
-                        if (yvel > VERTICAL_THRESHOLD || (distanceTop == -viewHeight && releaseChild.getTop() > DISTANCE_THRESHOLD)) {
+                        if (yvel > SPEED_THRESHOLD || (distanceTop == -viewHeight && releaseChild.getTop() > DISTANCE_THRESHOLD)) {
                             // 保持不动
                             finalTop = viewHeight;
                         }
                     }
-                }
 
                 if (mDragHelper.smoothSlideViewTo(releaseChild, 0, finalTop)) {
                     ViewCompat.postInvalidateOnAnimation(DragLayout.this);
@@ -135,7 +172,7 @@ public class DragLayout extends ViewGroup {
 
         });
         mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_BOTTOM);
-        mGeusterDetector = new GestureDetectorCompat(getContext(), new YScrollDetector());
+        mGestureDetector = new GestureDetectorCompat(getContext(), new YScrollDetector());
     }
 
     /**
