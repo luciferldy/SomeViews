@@ -25,6 +25,7 @@ import com.luciferldy.someviews.ui.fragment.RoundedImageFragment;
 import com.luciferldy.someviews.ui.fragment.RvRefreshFragment;
 import com.luciferldy.someviews.ui.fragment.SearchFragment;
 import com.luciferldy.someviews.ui.fragment.SlideTrackFragment;
+import com.luciferldy.someviews.ui.fragment.ZoomImageFragment;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mRvAdapter = new RvAdapter();
         rv.setAdapter(mRvAdapter);
 
+        mRvAdapter.add(new SampleInfo("ZoomImage", ZoomImageFragment.class.getName()));
         mRvAdapter.add(new SampleInfo("ItemTouchHelper", ItemTouchFragment.class.getName()));
         mRvAdapter.add(new SampleInfo("DragLayout", DragLayoutFragment.class.getName()));
         mRvAdapter.add(new SampleInfo("FoldingLayout", FoldingLayoutFragment.class.getName()));
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         mManager = getSupportFragmentManager();
 
-        newFragment(RvRefreshFragment.class.getName());
+        newFragment(ZoomImageFragment.class.getName());
     }
 
     class RvAdapter extends RecyclerView.Adapter<RvHolder> {
